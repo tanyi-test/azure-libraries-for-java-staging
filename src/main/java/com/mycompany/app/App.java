@@ -15,9 +15,17 @@ public class App {
         final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
         Azure azure = Azure.configure().withLogLevel(LogLevel.NONE).authenticate(credFile).withDefaultSubscription();
 
-        final String rgName = "test";
+        final String rgName = "RandomGroup";
         final Region region = Region.US_WEST;
 
-        azure.resourceGroups().define(rgName).withRegion(region).create();
+        final Boolean isExist = azure.resourceGroups().contain(rgName);
+
+        if (!isExist)
+            azure.resourceGroups().define(rgName).withRegion(region).create();
+
+        System.out.println(azure.resourceGroups().getByName(rgName).id());
+
+        if (!isExist)
+            azure.resourceGroups().beginDeleteByName(rgName);
     }
 }
