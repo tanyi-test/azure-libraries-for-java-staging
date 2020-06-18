@@ -1,10 +1,12 @@
 package com.mycompany.app;
 
-import java.io.File;
-
-import com.microsoft.azure.management.Azure;
-import com.microsoft.azure.management.resources.fluentcore.arm.Region;
-import com.microsoft.rest.LogLevel;
+import com.azure.core.credential.TokenCredential;
+import com.azure.core.http.policy.HttpLogDetailLevel;
+import com.azure.core.management.AzureEnvironment;
+import com.azure.identity.EnvironmentCredentialBuilder;
+import com.azure.resourcemanager.Azure;
+import com.azure.resourcemanager.resources.fluentcore.arm.Region;
+import com.azure.resourcemanager.resources.fluentcore.profile.AzureProfile;
 
 /**
  * Hello world!
@@ -12,13 +14,15 @@ import com.microsoft.rest.LogLevel;
  */
 public class App {
     public static void main(String[] args) throws Exception {
-        final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
-        Azure azure = Azure.configure().withLogLevel(LogLevel.NONE).authenticate(credFile).withDefaultSubscription();
+        TokenCredential credential = new EnvironmentCredentialBuilder().build();
+        Azure azure = Azure.configure().withLogLevel(HttpLogDetailLevel.NONE)
+                .authenticate(credential, new AzureProfile(AzureEnvironment.AZURE))
+                .withDefaultSubscription();
 
         final String rgName = "RandomGroup";
         final Region region = Region.US_WEST;
 
-        final Boolean isExist = azure.resourceGroups().contain(rgName);
+        final boolean isExist = azure.resourceGroups().contain(rgName);
 
         if (!isExist)
             azure.resourceGroups().define(rgName).withRegion(region).create();

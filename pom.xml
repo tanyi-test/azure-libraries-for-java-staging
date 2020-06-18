@@ -10,7 +10,7 @@
     <repository>
       <id>oss-sonatype</id>
       <name>oss-sonatype</name>
-      <url>https://oss.sonatype.org:443/content/repositories/commicrosoftazure-3581/</url>
+      <url>https://oss.sonatype.org:443/content/repositories/comazure-1425</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
@@ -18,15 +18,14 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>com.azure.resourcemanager</groupId>
+      <artifactId>azure-resourcemanager</artifactId>
+      <version>2.0.0-beta.1</version>
     </dependency>
     <dependency>
-      <groupId>com.microsoft.azure</groupId>
-      <artifactId>azure</artifactId>
-      <version>1.29.0</version>
+      <groupId>com.azure</groupId>
+      <artifactId>azure-identity</artifactId>
+      <version>1.1.0-beta.5</version>
     </dependency>
   </dependencies>
   <build>
@@ -51,8 +50,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.5.1</version>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>8</source>
+          <target>8</target>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
